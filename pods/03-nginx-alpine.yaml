@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: linux85-nginx-alpine
+spec:
+  hostNetwork: true
+  containers:
+    - name: nginx
+      image: nginx:1.23.4-alpine
+    - name: linux
+      image: alpine
+      stdin: true
+      # args: ["tail","-f","/etc/hosts"]
+      # command: ["sleep","15"]
+      command:
+        - "tail"
+      args:
+        - "-f"
+        - "/etc/hosts"

@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: linux85-nginx-tomcat
+spec:
+  containers:
+    - name: nginx
+      image: nginx:1.23.4-alpine
+      ports:
+        - containerPort: 80
+    - name: tomcat
+      image: tomcat:jre8-alpine
+      ports:
+        - containerPort: 8080

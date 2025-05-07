@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: oldboyedu-linux86
+  labels:
+    school: oldboyedu
+    class: linux86

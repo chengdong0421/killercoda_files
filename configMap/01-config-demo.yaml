@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: linux85-config
+data:
+  school: oldboyedu
+  class: linux85
+  my.cfg: |
+    datadir: "/var/lib/mysql"
+    basedir: "/usr/share/mysql"
+    socket: "/tmp/mysql.sock"
+  student.info: |
+    pengbing: "大长腿，熬夜"
+    wumingkun: "Linux"
+    qinghongbin: "欧美，日韩"
+

@@ -1,0 +1,32 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: linux85-game-env
+spec:
+  nodeName: k8s192.oldboyedu.com
+  containers:
+    - name: game
+      image: harbor.oldboyedu.com/oldboyedu-games/jasonyin2020/oldboyedu-games:v0.1
+      env:
+        - name: SCHOOL
+          value: oldboyedu
+        - name: CLASS
+          value: linux85
+        - name: OLDBOYEDU_POD_NAME
+          valueFrom:
+            fieldRef:
+              fieldPath: "metadata.name"
+        - name: OLDBOYEDU_NODENAME
+          valueFrom:
+            fieldRef:
+              fieldPath: "spec.nodeName"
+        - name: OLDBOYEDU_HOSTIP
+          valueFrom:
+            fieldRef:
+              fieldPath: "status.hostIP"
+        - name: OLDBOYEDU_PODIP
+          valueFrom:
+            fieldRef:
+              fieldPath: "status.podIP"
+
+              

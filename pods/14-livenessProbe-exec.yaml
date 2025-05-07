@@ -1,0 +1,32 @@
+kind: Pod
+apiVersion: v1
+metadata:
+  name: oldboyedu-linux85-exec-001
+  labels:
+     apps: myweb
+spec:
+  containers:
+  - name: linux85-exec
+    image: harbor.oldboyedu.com/web/nginx:1.23.4-alpine
+    command: 
+    - /bin/sh
+    - -c
+    - touch /tmp/oldboyedu-linux85-healthy; sleep 5; rm -f /tmp/oldboyedu-linux85-healthy; sleep 600
+    # 健康状态检查，周期性检查服务是否存活，检查结果失败，将重启容器。
+    livenessProbe:
+      # 使用exec的方式去做健康检查
+      exec:
+        # 自定义检查的命令
+        command:
+        - cat
+        - /tmp/oldboyedu-linux85-healthy
+      # 检测服务失败次数的累加值，默认值是3次，最小值是1。当检测服务成功后，该值会被重置!
+      failureThreshold: 3
+      # 指定多久之后进行健康状态检查，即此时间段内检测服务失败并不会对failureThreshold进行计数。
+      initialDelaySeconds: 15
+      # 指定探针检测的频率，默认是10s，最小值为1.
+      periodSeconds: 1
+      # 检测服务成功次数的累加值，默认值为1次，最小值1.
+      successThreshold: 1
+      # 一次检测周期超时的秒数，默认值是1秒，最小值为1.
+      timeoutSeconds: 1

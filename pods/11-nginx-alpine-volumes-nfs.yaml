@@ -1,0 +1,37 @@
+apiVersion: v1
+kind: Pod
+metadata: 
+  name: linux85-volume-nfs-web
+spec:
+  nodeName: k8s192.oldboyedu.com
+  volumes:
+    - name: data
+      nfs:
+        path: /oldboyedu/data/kubernetes/volume-nfs
+        server: k8s191.oldboyedu.com
+  containers:
+    - name: web
+      image: harbor.oldboyedu.com/web/nginx:1.23.4-alpine
+      volumeMounts:
+        - name: data
+          mountPath: /usr/share/nginx/html
+
+---
+apiVersion: v1
+kind: Pod
+metadata: 
+  name: linux85-volume-nfs-linux
+spec:
+  nodeName: k8s193.oldboyedu.com
+  volumes:
+    - name: data
+      nfs:
+        path: /oldboyedu/data/kubernetes/volume-nfs
+        server: k8s191.oldboyedu.com
+  containers:
+    - name: linux
+      image: harbor.oldboyedu.com/linux/alpine:latest
+      stdin: true
+      volumeMounts:
+        - name: data
+          mountPath: /oldboyedu-data-linux85

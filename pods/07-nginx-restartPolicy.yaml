@@ -1,0 +1,46 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: linux85-web-restartpolicy-always
+spec:
+  nodeName: k8s193.oldboyedu.com
+  # 始终重启，以下示例容器在sleep 10秒后会退出(正常退出)，由于重启策略设置为Always，容器会重新启动
+  restartPolicy: Always
+  containers:
+    - name: nginx
+      image: harbor.oldboyedu.com/web/linux85-web:v0.1
+      command:
+        - "sleep"
+        - "10"
+
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: linux85-web-restartpolicy-onfailure
+spec:
+  nodeName: k8s193.oldboyedu.com
+  # 正常退出不会重启，异常退出重启
+  restartPolicy: OnFailure
+  containers:
+    - name: nginx
+      image: harbor.oldboyedu.com/web/linux85-web:v0.1
+      command:
+        - "sleep"
+        - "10"
+
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: linux85-web-restartpolicy-never
+spec:
+  nodeName: k8s193.oldboyedu.com
+  # 容器退出后始终不会重启
+  restartPolicy: Never
+  containers:
+    - name: nginx
+      image: harbor.oldboyedu.com/web/linux85-web:v0.1
+      command:
+        - "sleep"
+        - "10"

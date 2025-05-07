@@ -1,0 +1,53 @@
+apiVersion: v1
+kind: ReplicationController
+metadata:
+  name: oldboyedu-linux85-web-rc-readinessprobe-httpget
+  namespace: default
+  labels:
+    school: oldboyedu
+    class: linux85
+    apps: rc
+spec:
+  replicas: 3
+  selector:
+    classroom: jiaoshi05
+    address: oldboyedu-shahe
+  template:
+    metadata:
+      labels:
+        classroom: jiaoshi05
+        address: oldboyedu-shahe
+        hobby: k8s
+        auther: jasonyin
+    spec: 
+      containers:
+        - name: linux85-httpget
+          image: harbor.oldboyedu.com/web/nginx:1.23.4-alpine
+          readinessProbe:
+            httpGet:
+              port: 80
+              path: /index.html
+            failureThreshold: 3
+            initialDelaySeconds: 15
+            periodSeconds: 1
+            successThreshold: 1
+            timeoutSeconds: 1
+
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: oldboyedu-linux85-web-readinessprobe-httpget
+  labels:
+    apps: oldboyedu-svc
+    class: linux85
+spec:
+  selector:
+    hobby: k8s
+    classroom: jiaoshi05
+  type: ClusterIP
+  ports:
+    - port: 80
+      targetPort: 80
+      protocol: TCP
