@@ -11,7 +11,7 @@ spec:
     metadata:
       labels:
         school: oldboyedu
-        version: v2
+        version: v1
     spec:
       volumes:
         - name: index
