@@ -13,13 +13,16 @@ spec:
         school: oldboyedu
     spec:
       volumes:
-        - name: data
-          emptyDir: {}
+        - name: index
+          hostPath:
+            path: /tmp/index.html
+            type: FileOrCreate
       containers:
         - name: nginx
           image: nginx:1.23.4-alpine
           volumeMounts:
-            mountPath: /usr/share/nginx/html
+            - name: index
+              mountPath: /usr/share/nginx/html/index.html
               
 
 ---
